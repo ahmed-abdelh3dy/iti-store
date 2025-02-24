@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category;
+use App\Models\image;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        
-        $categories = category::all();
-        dd($categories);
+        $images=image::all();
+        return view('upload',compact('images'));
     }
 
     /**
@@ -30,13 +29,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+                $request->validate([
+                    'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                ]);
+                $path = $request->file('image')->store('uploads', 'public');
+                $imageUrl = asset("storage/$path");
+                return back()->with('success', 'upload image')->with('image', $imageUrl);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(category $category)
+    public function show(image $image)
     {
         //
     }
@@ -44,7 +49,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(category $category)
+    public function edit(image $image)
     {
         //
     }
@@ -52,7 +57,7 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, category $category)
+    public function update(Request $request, image $image)
     {
         //
     }
@@ -60,7 +65,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(category $category)
+    public function destroy(image $image)
     {
         //
     }
