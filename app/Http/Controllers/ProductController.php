@@ -12,7 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = product::all();
+        return view('products.products' , compact('products'));
     }
 
     /**
@@ -20,7 +21,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -28,7 +29,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        product::create([
+            'name' => $request->name,
+            'price' => $request->price,
+            'description' => $request->description,
+            'slug' => $request->slug,
+            'stock' => $request->stock,
+        ]);
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -44,7 +54,7 @@ class ProductController extends Controller
      */
     public function edit(product $product)
     {
-        //
+        return view('products.edit',compact('product'));
     }
 
     /**
@@ -52,14 +62,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, product $product)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product $product)
+    public function destroy(product $product,$id)
     {
-        //
+        Product::destroy($id);
+        // $product = Product::findOrFail($id);
+        // $product->delete();
+        return redirect()->route('products.index');
     }
 }

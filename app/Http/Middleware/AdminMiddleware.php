@@ -19,6 +19,7 @@ class AdminMiddleware
         if(!Auth::guard('admin')->check()){
             return back();
         }
+        
         return $next($request);
     }
 }
