@@ -56,6 +56,8 @@
        :fields="[
  ['name' => 'name', 'label' => 'Name', 'type' => 'text'],
   ['name' => 'email', 'label' => 'Email', 'type' => 'email'],
+  ['name' => 'phone', 'label' => 'phone', 'type' => 'integer'],
+  ['name' => 'address', 'label' => 'address', 'type' => 'text'],
   ['name' => 'password', 'label' => 'Password', 'type' => 'password'],
  ['name' => 'password_confirmation', 'label' => 'Confirm Password', 'type' => 'password']
     ]"

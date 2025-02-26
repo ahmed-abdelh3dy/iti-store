@@ -12,34 +12,40 @@ use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 //home
-Route::get('/',[HomeController::class , 'index'])->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
 
 //dashboard
-Route::middleware(AdminMiddleware::class)->group(function(){
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('admin.dashboard');
-
+Route::middleware(AdminMiddleware::class)
+->name('admin.')
+->prefix('admin')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    //categories
+    Route::resource('categories', CategoryController::class);
+    //products
+    Route::resource('products', ProductController::class);
 });
 
 
 //login
-Route::get('login',[AuthController::class,'showLoginForm'])->name('login');
-Route::post('login',[AuthController::class,'store'])->name('login.submit');
-Route::post('logout',[AuthController::class,'destroy'])->name('logout');
+Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [AuthController::class, 'store'])->name('login.submit');
+Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
 
 //register
-Route::get('/register',[RegisterController::class,'index'])->name('register');
-Route::post('/registerr',[RegisterController::class,'store'])->name('registerr');
+Route::get('/register', [RegisterController::class, 'index'])->name('register');
+Route::post('/registerr', [RegisterController::class, 'store'])->name('registerr');
+Route::get('/edit/{id}', [RegisterController::class, 'edit'])->name('profile.edit');
+Route::put('/update/{id}', [RegisterController::class, 'update'])->name('profile.update');
 
 //admin login
-
-Route::get('/admin/login',[AdminController::class,'index'])->name('login.admin');
-Route::post('/admin/login',[AdminController::class,'login'])->name('login-admin.submit');
-Route::post('/admin/logout',[AdminController::class,'logout'])->name('admin-logout');
+Route::get('/admin/login', [AdminController::class, 'index'])->name('login.admin');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('login-admin.submit');
+Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin-logout');
 
 
 //products
-Route::prefix('products')->group(function(){
+Route::prefix('products')->group(function () {
     Route::get('index', [ProductController::class, 'index'])->name('products.index');
     Route::get('create', [ProductController::class, 'create'])->name('products.create');
     Route::post('store', [ProductController::class, 'store'])->name('products.store');
@@ -50,9 +56,8 @@ Route::prefix('products')->group(function(){
 
 
 //upload image 
-Route::get('image',[ImageController::class,'index'])->name('image');
-Route::post('image/upload',[ImageController::class,'store'])->name('image.store');
-
+// Route::get('image', [ImageController::class, 'index'])->name('image');
+// Route::post('image/upload', [ImageController::class, 'store'])->name('image.store');
 
 
 

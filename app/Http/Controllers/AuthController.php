@@ -33,7 +33,8 @@ class AuthController extends Controller
         $credentials =$request->validate([
             
             'email'    => 'required|email',
-            'password' => 'required|min:10'
+            'password' => 'required|min:10',
+           
     
            ]);
            if(Auth::attempt($credentials)){
@@ -72,7 +73,7 @@ class AuthController extends Controller
     public function destroy(Login $login)
     {
         Auth::logout();
-        return redirect()->route('index')->with('success' , 'loggedout successfuly');
+        return redirect()->route('index')->with('success' , 'logout successfuly');
     }
 
     public function showLoginForm(){

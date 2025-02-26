@@ -1,6 +1,7 @@
 <x-layouts.app>
 
     <section>
+        <h1 class="text-center">Welcome To My Store</h1>
         <h2 class="text-center">Explore Categories</h2>
         <div class="row">
            @foreach ($categories as $category)
